@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GLOBAL OFFSET FOR FIXED NAVBAR */
+
+
+/* ---------- COZY GLOBAL FEEL ---------- */
+* {
+  transition: background-color 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease,
+              transform 0.25s ease;
+}
+
+/* ---------- FADE + SLIDE ANIMATIONS ---------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.fade-up.visible {
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+/* ---------- SOFT ROUNDED HELPERS ---------- */
+.rounded-soft {
+  border-radius: 1.25rem;
+}
+
+/* ---------- CHAT PAGE STYLES ---------- */
+
+@keyframes chatPop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#chatMessages {
+  scroll-behavior: smooth;
+}
+
+#chatMessages > div {
+  animation: chatPop 0.25s ease-out forwards;
+  line-height: 1.4;
+}
+
+#chatMessages .bg-collex-teal {
+  box-shadow: 0 6px 16px rgba(20, 184, 166, 0.25);
+}
+
+#chatMessages .bg-white,
+#chatMessages .dark\:bg-gray-800 {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+#chatInput:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.25);
+}
+
+/* ---------- SCROLLBAR (CHAT ONLY) ---------- */
+#chatMessages::-webkit-scrollbar {
+  width: 6px;
+}
+
+#chatMessages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#chatMessages::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+}
+
+#chatMessages::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- MODAL DEPTH ---------- */
+.fixed.z-50 > div {
+  animation: fadeUp 0.35s ease-out forwards;
+}
+
+/* ---------- STAGGER HELPERS ---------- */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }

@@ -1,0 +1,38 @@
+{
+  "info": {
+    "name": "COLLEX Admin Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get stats",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer <token>" }
+        ],
+        "url": { "raw": "http://localhost:5004/api/v1/admin/stats", "host": ["http://localhost:5004"] }
+      }
+    },
+    {
+      "name": "Get pending users",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer <token>" }
+        ],
+        "url": { "raw": "http://localhost:5004/api/v1/admin/pending-users", "host": ["http://localhost:5004"] }
+      }
+    },
+    {
+      "name": "Approve user",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer <token>" }
+        ],
+        "url": { "raw": "http://localhost:5004/api/v1/admin/approve/<userId>", "host": ["http://localhost:5004"] }
+      }
+    }
+  ]
+}
