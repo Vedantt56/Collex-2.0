@@ -7,6 +7,7 @@ import Explore from "./pages/Explore";
 import Sell from "./pages/Sell";
 import Listings from "./pages/Listings";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
 import Chat from "./pages/Chat";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
@@ -19,6 +20,8 @@ import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ToastProvider } from "./context/ToastContext";
+console.log("ENV", import.meta.env);
+console.log("AUTH", import.meta.env.VITE_AUTH_URL);
 
 export default function App() {
   return (
@@ -33,6 +36,7 @@ export default function App() {
                 <Route path="/sell" element={<Sell />} />
                 <Route path="/listing" element={<Listings />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/chat" element={<Chat />} />

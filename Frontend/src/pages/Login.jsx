@@ -134,7 +134,11 @@ export default function Login() {
         {error && <p className="mt-4 text-left text-sm text-red-600 dark:text-red-300">{error}</p>}
 
         <div className="mt-4 flex items-center justify-between gap-3 text-left">
-          <button type="button" className="text-sm text-indigo-400 hover:underline">
+          <button
+            type="button"
+            onClick={() => navigate("/forgot-password")}
+            className="text-sm text-indigo-400 hover:underline"
+          >
             Forget password?
           </button>
           <button

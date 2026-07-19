@@ -1,6 +1,7 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { getCurrentUser } from "../services/authService";
@@ -43,6 +44,38 @@ export function AuthProvider({
 }) {
   const [user, setUser] =
     useState(readStoredAuth);
+
+  useEffect(() => {
+    const token =
+      localStorage.getItem("token");
+
+    if (!token) {
+      return;
+    }
+
+    getCurrentUser(token)
+      .then((data) => {
+        const authData = {
+          token,
+          user: data.user,
+        };
+
+        localStorage.setItem(
+          "collex_user",
+          JSON.stringify(authData)
+        );
+        setUser(authData);
+      })
+      .catch(() => {
+        localStorage.removeItem(
+          "collex_user"
+        );
+        localStorage.removeItem(
+          "token"
+        );
+        setUser(null);
+      });
+  }, []);
 
   const login = (userData) => {
     const authData = userData.user

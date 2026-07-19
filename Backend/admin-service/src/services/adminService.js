@@ -1,6 +1,6 @@
 const User = require("../models/User");
 
-const LISTING_SERVICE_URL = process.env.LISTING_SERVICE_URL || "http://localhost:5002";
+const LISTING_SERVICE_URL = process.env.LISTING_SERVICE_URL || "http://listing-service:5002";
 
 const getUsers = async (query = {}) => {
   return User.find(query).select("-password").sort({ createdAt: -1 });

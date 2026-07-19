@@ -1,7 +1,6 @@
 import apiClient from "./apiClient";
 
-const API_URL =
-  "/api/v1/auth";
+const API_URL = `${import.meta.env.VITE_AUTH_URL || ""}/api/v1/auth`;
 
 export const loginUser = async (
   email,
@@ -49,6 +48,18 @@ export const getCurrentUser = async (token) => {
 export const logoutUser = async () => {
   const response = await apiClient.post(
     `${API_URL}/logout`
+  );
+
+  return response.data;
+};
+
+export const resetPassword = async (email, password) => {
+  const response = await apiClient.post(
+    `${API_URL}/reset-password`,
+    {
+      email,
+      password,
+    }
   );
 
   return response.data;

@@ -89,9 +89,47 @@ const logout = async (req, res) => {
         message: "User logged out successfully"
     });
 };
+
+const resetPassword = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Email and new password are required"
+            });
+        }
+
+        if (password.length < 6) {
+            return res.status(400).json({
+                message: "Password must be at least 6 characters"
+            });
+        }
+
+        const normalizedEmail = email.toLowerCase().trim();
+        const user = await User.findOne({ email: normalizedEmail });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "No account found with this email"
+            });
+        }
+
+        user.password = await bcrypt.hash(password, 10);
+        await user.save();
+
+        return res.status(200).json({
+            message: "Password reset successfully"
+        });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     signup,
     loginUser,
     getMe,
-    logout
+    logout,
+    resetPassword
 };

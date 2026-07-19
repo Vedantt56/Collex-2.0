@@ -1,6 +1,7 @@
 import apiClient from "./apiClient";
 
-const API_URL = "/api/v1/listings";
+const API_URL =
+  `${import.meta.env.VITE_LISTING_URL || ""}/api/v1/listings`;
 
 export const createListing = async (listing) => {
   const response = await apiClient.post(API_URL, listing);

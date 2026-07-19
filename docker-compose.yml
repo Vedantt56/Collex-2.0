@@ -1,0 +1,105 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: collex-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - collex-local-mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  auth-service:
+    build:
+      context: ./Backend/auth-service
+    container_name: collex-auth-service
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      MONGO_URI: mongodb://mongo:27017/collex
+      JWT_SECRET: collex_local_demo_secret
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  listing-service:
+    build:
+      context: ./Backend/listing-service
+    container_name: collex-listing-service
+    restart: unless-stopped
+    environment:
+      PORT: 5002
+      MONGO_URI: mongodb://mongo:27017/collex
+      JWT_SECRET: collex_local_demo_secret
+      AUTH_SERVICE_URL: http://auth-service:5000/api/v1/auth
+    depends_on:
+      mongo:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+
+  explore-service:
+    build:
+      context: ./Backend/explore-service
+    container_name: collex-explore-service
+    restart: unless-stopped
+    environment:
+      PORT: 5003
+      MONGO_URI: mongodb://mongo:27017/collex
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  admin-service:
+    build:
+      context: ./Backend/admin-service
+    container_name: collex-admin-service
+    restart: unless-stopped
+    environment:
+      PORT: 5004
+      MONGO_URI: mongodb://mongo:27017/collex
+      JWT_SECRET: collex_local_demo_secret
+      LISTING_SERVICE_URL: http://listing-service:5002/api/v1
+    depends_on:
+      mongo:
+        condition: service_healthy
+      listing-service:
+        condition: service_started
+
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: collex-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      auth-service:
+        condition: service_started
+      listing-service:
+        condition: service_started
+      explore-service:
+        condition: service_started
+      admin-service:
+        condition: service_started
+
+  admin-seed:
+    build:
+      context: ./Backend/auth-service
+    container_name: collex-admin-seed
+    command: ["node", "seed-admin.js"]
+    environment:
+      MONGO_URI: mongodb://mongo:27017/collex
+      JWT_SECRET: collex_local_demo_secret
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: "no"
+
+volumes:
+  collex-local-mongo-data:

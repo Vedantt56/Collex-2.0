@@ -1,6 +1,7 @@
 import apiClient from "./apiClient";
 
-const API_URL = "/api/v1";
+const API_URL =
+  `${import.meta.env.VITE_EXPLORE_URL || ""}/api/v1`;
 
 export const getExploreListings = async (params = {}) => {
   const response = await apiClient.get(`${API_URL}/explore`, {

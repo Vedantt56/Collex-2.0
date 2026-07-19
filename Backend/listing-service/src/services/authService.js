@@ -1,6 +1,6 @@
 const AUTH_SERVICE_URL =
     process.env.AUTH_SERVICE_URL ||
-    "http://localhost:5000/api/v1/auth";
+    "http://auth-service:5000/api/v1/auth";
 
 const getCurrentUser = async (authorization) => {
     const response = await fetch(`${AUTH_SERVICE_URL}/me`, {

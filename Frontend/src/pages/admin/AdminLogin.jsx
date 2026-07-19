@@ -112,7 +112,11 @@ export default function AdminLogin() {
 
         {error && <p className="mt-4 text-left text-sm text-red-600 dark:text-red-300">{error}</p>}
 
-        <button type="button" className="mt-4 block text-sm text-indigo-400 hover:underline">
+        <button
+          type="button"
+          onClick={() => navigate("/forgot-password")}
+          className="mt-4 block text-sm text-indigo-400 hover:underline"
+        >
           Forget password?
         </button>
 

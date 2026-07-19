@@ -1,6 +1,7 @@
 import apiClient from "../apiClient";
 
-const ADMIN_API = "/api/v1/admin";
+const ADMIN_API =
+    `${import.meta.env.VITE_ADMIN_URL || ""}/api/v1/admin`;
 
 export const loginAsAdmin = async (email, password) => {
   const response = await apiClient.post(`${ADMIN_API}/login`, { email, password });
